@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace PlayingWithSpans
+namespace IntroToSpans
 {
     /// <summary>
     /// Getting familiar with Span<T>...
@@ -18,23 +18,23 @@ namespace PlayingWithSpans
         private static void TestSpanWithAllMemoryTypes()
         {
             // managed memory
-            var arrayMemory = new byte[100];
-            var arraySpan = new Span<byte>(arrayMemory);
+            var byteArray = new byte[100];
+            Span<byte> byteSpanOnManagedMemory = byteArray;
 
             // native memory
             var nativeMemory = Marshal.AllocHGlobal(100);
-            Span<byte> nativeSpan;
+            Span<byte> byteSpanOnNativeMemory;
             unsafe
             {
-                nativeSpan = new Span<byte>(nativeMemory.ToPointer(), 100);
+                byteSpanOnNativeMemory = new Span<byte>(nativeMemory.ToPointer(), 100);
             }
 
-            SafeSum(nativeSpan);
+            SafeSum(byteSpanOnNativeMemory);
             Marshal.FreeHGlobal(nativeMemory);
 
             // stack memory
-            Span<byte> stackSpan = stackalloc byte[100];
-            SafeSum(stackSpan);
+            Span<byte> byteSpanOnStackMemory = stackalloc byte[100];
+            SafeSum(byteSpanOnStackMemory);
         }
 
         // this method does not care what kind of memory it works on
