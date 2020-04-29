@@ -4,7 +4,14 @@ using static TestingSpan.StringExtensions;
 
 namespace TestingSpan
 {
-    // Must be a ref struct as it contains ReadOnlySpan<char> field & property
+    /// <summary>
+    /// Word Enumerator that can be used in a foreach statement
+    /// Must be a ref struct as it contains ReadOnlySpan<char> field & property
+    /// </summary>
+    /// <remarks>
+    /// Thanks to Meziantou, whose blog post inspired me:
+    /// https://www.meziantou.net/split-a-string-into-lines-without-allocation.htm
+    /// </remarks>
     public ref struct WordEnumerator
     {
         private ReadOnlySpan<char> _remainingSpan;
@@ -24,29 +31,29 @@ namespace TestingSpan
             if (span.Length == 0)
                 return false;
 
-            var index = span.IndexOfAny(WordSeparators);
-            if (index == -1) // _remainingSpan is made up of a single word
+            // Find the start of a separator series
+            var indexStart = span.IndexOfAny(WordSeparators);
+            if (indexStart == -1) // _remainingSpan contains a single word
             {
                 _remainingSpan = ReadOnlySpan<char>.Empty;
                 Current = span;
                 return true;
             }
 
-            // Find all consecutive word separators
-            var index2 = index;
-            while (index2 < span.Length - 1 && WordSeparators.Contains(span[index2 + 1]))
+            // Find the end of the separator series
+            var indexEnd = indexStart;
+            while (indexEnd < span.Length - 1 && WordSeparators.Contains(span[indexEnd + 1]))
             {
-                index2++;
+                indexEnd++;
             }
 
-            var separatorSeriesLength = index2 - index + 1;
-            _remainingSpan = span.Slice(index + separatorSeriesLength);
+            _remainingSpan = span.Slice(indexEnd + 1);
 
             // If this is an empty word, get the next one immediately
-            if (index == 0)
+            if (indexStart == 0)
                 return MoveNext();
 
-            Current = span.Slice(0, index);
+            Current = span.Slice(0, indexStart);
             return true;
         }
     }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using BenchmarkDotNet.Attributes;
 using static TestingSpan.StringExtensions;
 
@@ -53,33 +52,19 @@ sed viverra tellus. Euismod quis viverra nibh cras pulvinar mattis nunc sed blan
 aliquam sem. Habitant morbi tristique senectus et netus et malesuada. Consectetur adipiscing elit duis tristique
 sollicitudin nibh sit amet commodo.";
 
-#if DEBUG
-        public static void UseSplit(List<string> list)
-#else
         [Benchmark(Baseline = true)]
         public void UseSplit()
-#endif
         {
             foreach (var word in _myText.Split(WordSeparators, StringSplitOptions.RemoveEmptyEntries))
             {
-#if DEBUG
-                list.Add(word);
-#endif
             }
         }
 
-#if DEBUG
-        public static void UseSpan(List<string> list)
-#else
         [Benchmark]
         public void UseSpan()
-#endif
         {
             foreach (var word in _myText.SplitIntoWords())
             {
-#if DEBUG
-                list.Add(word.ToString());
-#endif
             }
         }
     }
