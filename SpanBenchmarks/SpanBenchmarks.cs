@@ -7,7 +7,7 @@ namespace TestingSpan
     [MemoryDiagnoser]
     public class SpanBenchmarks
     {
-        private static readonly string _myText = @"
+        private const string MyText = @"
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
 aliqua. Turpis egestas sed tempus urna. Vel pharetra vel turpis nunc eget lorem dolor. A diam sollicitudin tempor id
 eu nisl. Nunc scelerisque viverra mauris in aliquam. Massa eget egestas purus viverra accumsan in. Fermentum et
@@ -55,7 +55,7 @@ sollicitudin nibh sit amet commodo.";
         [Benchmark(Baseline = true)]
         public void UseSplit()
         {
-            foreach (var word in _myText.Split(WordSeparators, StringSplitOptions.RemoveEmptyEntries))
+            foreach (var word in MyText.Split(WordSeparators, StringSplitOptions.RemoveEmptyEntries))
             {
             }
         }
@@ -63,7 +63,7 @@ sollicitudin nibh sit amet commodo.";
         [Benchmark]
         public void UseSpan()
         {
-            foreach (var word in _myText.SplitIntoWords())
+            foreach (var word in MyText.SplitIntoWords())
             {
             }
         }
