@@ -1,4 +1,4 @@
-# Copied from https://docs.microsoft.com/en-us/visualstudio/ide/editorconfig-code-style-settings-reference?view=vs-2019
+﻿# Copied from https://docs.microsoft.com/en-us/visualstudio/ide/editorconfig-code-style-settings-reference?view=vs-2019
 
 ###############################
 # Core EditorConfig Options   #
@@ -169,6 +169,7 @@ csharp_preserve_single_line_blocks = true
 # IDE0005: Using directive is unnecessary
 dotnet_diagnostic.IDE0005.severity = suggestion
 
+# SA0001: XML comment analysis is disabled due to project configuration
 dotnet_diagnostic.SA0001.severity = none
 
 # SA1101: Prefix local calls with this
@@ -182,6 +183,9 @@ dotnet_diagnostic.SA1309.severity = none
 
 # SA1600: Elements should be documented
 dotnet_diagnostic.SA1600.severity = none
+
+# SA1629: Documentation text should end with a period
+dotnet_diagnostic.SA1629.severity = none
 
 # SA1633: File should have header
 dotnet_diagnostic.SA1633.severity = none

@@ -41,7 +41,7 @@ namespace IntroToSpans
         private static ulong SafeSum(Span<byte> bytes)
         {
             ulong sum = 0;
-            for (int i = 0; i < bytes.Length; i++)
+            for (var i = 0; i < bytes.Length; i++)
             {
                 sum += bytes[i];
             }

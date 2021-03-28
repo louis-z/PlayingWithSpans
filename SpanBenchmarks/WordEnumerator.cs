@@ -47,7 +47,7 @@ namespace TestingSpan
                 indexEnd++;
             }
 
-            _remainingSpan = span.Slice(indexEnd + 1);
+            _remainingSpan = span[(indexEnd + 1)..];
 
             // If this is an empty word, get the next one immediately
             if (indexStart == 0)
