@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using BenchmarkDotNet.Attributes;
 using static TestingSpan.StringExtensions;
@@ -56,21 +57,43 @@ sollicitudin nibh sit amet commodo.";
         [Benchmark(Baseline = true)]
         [SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "Benchmarks MUST be instance methods")]
         [SuppressMessage("Style", "IDE0059:Unnecessary assignment of a value", Justification = "We need to iterate over words")]
-        public void UseSplit()
+        public string[] UseSplit()
         {
+#if DEBUG
+            var words = new List<string>();
+#endif
             foreach (var word in MyText.Split(WordSeparators, StringSplitOptions.RemoveEmptyEntries))
             {
+#if DEBUG
+                words.Add(word);
+#endif
             }
+#if DEBUG
+            return words.ToArray();
+#else
+            return Array.Empty<string>();
+#endif
         }
 
         [Benchmark]
         [SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "Benchmarks MUST be instance methods")]
         [SuppressMessage("Style", "IDE0059:Unnecessary assignment of a value", Justification = "We need to iterate over words")]
-        public void UseSpan()
+        public string[] UseSpan()
         {
+#if DEBUG
+            var words = new List<string>();
+#endif
             foreach (var word in MyText.SplitIntoWords())
             {
+#if DEBUG
+                words.Add(word.ToString());
+#endif
             }
+#if DEBUG
+            return words.ToArray();
+#else
+            return Array.Empty<string>();
+#endif
         }
     }
 }
