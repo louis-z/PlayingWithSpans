@@ -1,6 +1,9 @@
-﻿using System;
+﻿#if DEBUG
+using System;
 using System.Linq;
+#else
 using BenchmarkDotNet.Running;
+#endif
 
 namespace TestingSpan
 {

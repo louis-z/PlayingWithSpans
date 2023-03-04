@@ -53,7 +53,7 @@ namespace TestingSpan
             if (indexStart == 0)
                 return MoveNext();
 
-            Current = span.Slice(0, indexStart);
+            Current = span[..indexStart];
             return true;
         }
     }
